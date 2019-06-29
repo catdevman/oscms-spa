@@ -1,32 +1,44 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import MUIDataTable from "mui-datatables";
+import Moment from 'react-moment';
+import Loader from "../../UI/Loader";
+import withSearch from "../../HOC/WithSearch";
+import { withRouter } from "react-router";
 
 class Contacts extends Component {
     constructor(props){
         super(props);
         this.onRowClick = this.onRowClick.bind(this);
-        this.data = [
-           { id: 1, firstName: "Lucas", lastName: "Pearson" },
-           { id: 2, firstName: "Faith", lastName: "Pearson" },
-           { id: 3, firstName: "Tim", lastName: "Pearson" },
-           { id: 4, firstName: "Barb", lastName: "Pearson" },
-           { id: 5, firstName: "Amanda", lastName: "Norris" },
-           { id: 6, firstName: "Kyle", lastName: "Norris" },
-          ];
+        this.state = {data: [], isLoading: true, search: props.search };
+        console.log(props);
+        fetch('http://localhost:8080/contacts', {
+          method: 'GET',
+          mode: 'cors'
+        }).then(res => res.json()).then(res => this.setState({data: res, isLoading: false}));
     }
     onRowClick(rowData, rowMeta){
-      console.log(this.data[rowMeta.dataIndex]);
-      window.location = '/contacts/' + this.data[rowMeta.dataIndex].id;
+      console.log(this.state.data[rowMeta.dataIndex]);
+      window.location = '/contacts/' + this.state.data[rowMeta.dataIndex].id;
     }
     render(){
         const columns = [
             {
              name: "firstName",
-             label: "First Name",
+             label: "First",
             },
             {
              name: "lastName",
-             label: "Last Name",
+             label: "Last",
+            },
+            {
+              name: "dob",
+              label: "DOB",
+              options: {
+                customBodyRender: function(date){
+                  return <Moment format="MM-DD-YYYY">{date}</Moment>
+                },
+                filterType: 'textField',
+              }
             },
            ];
 
@@ -35,11 +47,19 @@ class Contacts extends Component {
           <div>
             <MUIDataTable
                 title={"Contacts"}
-                data={this.data}
+                data={this.state.data}
                 columns={columns}
                 options={{
+                    searchText: this.state.search,
                     selectableRows:'none',
-                    onRowClick: this.onRowClick
+                    onRowClick: this.onRowClick,
+                    textLabels: {
+                      body: {
+                          noMatch: this.state.isLoading ?
+                              <Loader /> :
+                              'Sorry, there is no matching data to display',
+                      },
+                    },
                 }}
             />
           </div>
@@ -47,4 +67,4 @@ class Contacts extends Component {
     }
 }
 
-export default Contacts;
+export default withSearch(withRouter(Contacts));
