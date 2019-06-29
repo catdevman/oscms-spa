@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "oscms-spa-dev-20190624211949-authRole",
+            "UnauthRoleArn": "arn:aws:iam::525665562974:role/oscms-spa-dev-20190624211949-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::525665562974:role/oscms-spa-dev-20190624211949-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "oscms-spa-dev-20190624211949-deployment",
+            "UnauthRoleName": "oscms-spa-dev-20190624211949-unauthRole",
+            "StackName": "oscms-spa-dev-20190624211949",
+            "StackId": "arn:aws:cloudformation:us-east-1:525665562974:stack/oscms-spa-dev-20190624211949/53b36bb0-96e7-11e9-a755-1270c4b0e9f2"
+        },
+        "categories": {
+            "auth": {
+                "oscmsspac911f18c": {}
+            }
+        }
+    }
+}
