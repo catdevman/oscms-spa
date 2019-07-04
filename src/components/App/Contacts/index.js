@@ -3,21 +3,20 @@ import MUIDataTable from "mui-datatables";
 import Moment from 'react-moment';
 import Loader from "../../UI/Loader";
 import withSearch from "../../HOC/WithSearch";
-import { withRouter } from "react-router";
 
 class Contacts extends Component {
     constructor(props){
         super(props);
         this.onRowClick = this.onRowClick.bind(this);
         this.state = {data: [], isLoading: true, search: props.search };
-        console.log(props);
-        fetch('http://localhost:8080/contacts', {
+        fetch('http://192.168.1.8:8080/contacts', {
           method: 'GET',
           mode: 'cors'
-        }).then(res => res.json()).then(res => this.setState({data: res, isLoading: false}));
+        })
+        .then(res => res.json())
+        .then(res => this.setState({data: res, isLoading: false}));
     }
     onRowClick(rowData, rowMeta){
-      console.log(this.state.data[rowMeta.dataIndex]);
       window.location = '/contacts/' + this.state.data[rowMeta.dataIndex].id;
     }
     render(){
@@ -67,4 +66,4 @@ class Contacts extends Component {
     }
 }
 
-export default withSearch(withRouter(Contacts));
+export default withSearch(Contacts);
