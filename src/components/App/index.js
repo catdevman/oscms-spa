@@ -111,7 +111,7 @@ class App extends Component {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            OSCMS - {this.state.title}
+            OSCMS
           </Typography>
         </Toolbar>
       </AppBar>
@@ -134,4 +134,6 @@ class App extends Component {
       }
 }
 
-export default withAuthenticator(withStyles(styles)(App), { signUpConfig });
+// export default withAuthenticator(
+export default withStyles(styles)(App)
+//, { signUpConfig });

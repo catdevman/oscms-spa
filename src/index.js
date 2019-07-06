@@ -8,6 +8,14 @@ import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers';
+import promise from 'redux-promise';
+
+const createStoreWithMiddleware = applyMiddleware(
+  promise
+)(createStore);
 
 Amplify.configure(awsconfig);
 
@@ -30,10 +38,12 @@ const theme = createMuiTheme({
   });
 
   ReactDOM.render(
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <App />
-      </Router>
-    </ThemeProvider>
+    <Provider store={createStoreWithMiddleware(reducers)}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <App />
+        </Router>
+      </ThemeProvider>
+    </Provider>
   , document.getElementById('root'));

@@ -3,50 +3,49 @@ import MUIDataTable from "mui-datatables";
 import Moment from 'react-moment';
 import Loader from "../../UI/Loader";
 import withSearch from "../../HOC/WithSearch";
+import { getContacts } from '../../../actions/index';
+import { connect } from 'react-redux';
 
 class Contacts extends Component {
     constructor(props){
         super(props);
         this.onRowClick = this.onRowClick.bind(this);
-        this.state = {data: [], isLoading: true, search: props.search };
-        fetch('http://192.168.1.8:8080/contacts', {
-          method: 'GET',
-          mode: 'cors'
-        })
-        .then(res => res.json())
-        .then(res => this.setState({data: res, isLoading: false}));
+        this.state = { isLoading: true, search: props.search };
+    }
+    componentWillMount(){
+      this.props.getContacts().then(() => this.setState({isLoading: false}));
     }
     onRowClick(rowData, rowMeta){
-      window.location = '/contacts/' + this.state.data[rowMeta.dataIndex].id;
+      window.location = '/contacts/' + this.props.contacts[rowMeta.dataIndex].id;
     }
     render(){
         const columns = [
-            {
-             name: "firstName",
-             label: "First",
-            },
-            {
-             name: "lastName",
-             label: "Last",
-            },
-            {
-              name: "dob",
-              label: "DOB",
-              options: {
-                customBodyRender: function(date){
-                  return <Moment format="MM-DD-YYYY">{date}</Moment>
-                },
-                filterType: 'textField',
-              }
-            },
-           ];
+          {
+            name: "firstName",
+            label: "First",
+          },
+          {
+            name: "lastName",
+            label: "Last",
+          },
+          {
+            name: "dob",
+            label: "DOB",
+            options: {
+              customBodyRender: function(date){
+                return <Moment format="MM-DD-YYYY">{date}</Moment>
+              },
+              filterType: 'textField',
+            }
+          },
+        ];
 
 
         return(
           <div>
             <MUIDataTable
                 title={"Contacts"}
-                data={this.state.data}
+                data={this.props.contacts}
                 columns={columns}
                 options={{
                     searchText: this.state.search,
@@ -66,4 +65,10 @@ class Contacts extends Component {
     }
 }
 
-export default withSearch(Contacts);
+function mapStateToProps(state){
+  return {
+    contacts: state.contacts.all
+  }
+}
+
+export default connect(mapStateToProps, {getContacts})(withSearch(Contacts));
