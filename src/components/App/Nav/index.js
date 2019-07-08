@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink as Link } from "react-router-dom";
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +10,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChatIcon from '@material-ui/icons/Chat';
 import ContactsIcon from '@material-ui/icons/Contacts';
 
@@ -29,6 +28,7 @@ const styles = theme => ({
     },
     drawerPaper: {
       width: drawerWidth,
+      background: theme.palette.secondary.light
     },
     drawerHeader: {
       display: 'flex',
@@ -40,12 +40,13 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
     link: {
         textDecoration: 'none',
+        color: theme.palette.primary.main
     },
   });
 class Nav extends Component {
 
     render(){
-    const {classes, theme, open, handleDrawerClose} = this.props;
+    const {classes, open, handleDrawerClose} = this.props;
     return (
         <Drawer
         className={classes.drawer}
@@ -58,7 +59,7 @@ class Nav extends Component {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            <ChevronLeftIcon />
           </IconButton>
         </div>
       <Divider />
@@ -88,4 +89,4 @@ class Nav extends Component {
     }
 }
 
-export default  withTheme(withStyles(styles)(Nav));
+export default  withStyles(styles)(Nav);

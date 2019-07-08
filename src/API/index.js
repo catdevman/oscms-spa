@@ -20,4 +20,9 @@ export function getContact(id){
     return res;
 }
 
-export default { getPlots, getPlot, getContacts, getContact };
+export function getCemeteries(){
+    const res = axios.get(`${config.url}/cemeteries`);
+    return res;
+}
+
+export default { getPlots, getPlot, getContacts, getContact, getCemeteries };

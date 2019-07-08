@@ -26,7 +26,7 @@ const theme = createMuiTheme({
         main: '#1565c0',
       },
       secondary: {
-        main: '#19857b',
+        main: '#f0f0f0',
       },
       error: {
         main: '#FF0000',
@@ -38,12 +38,12 @@ const theme = createMuiTheme({
   });
 
   ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(reducers)}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <App />
-        </Router>
-      </ThemeProvider>
-    </Provider>
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <App />
+      </Router>
+    </ThemeProvider>
+  </Provider>
   , document.getElementById('root'));

@@ -70,6 +70,7 @@ class Plots extends Component {
                               'Sorry, there is no matching data to display',
                       },
                     },
+                    print: false,
                 }}
             />
           </div>

@@ -5,6 +5,8 @@ import Plots from './Plots';
 import PlotDetails from './PlotDetails';
 import Contacts from './Contacts';
 import ContactDetails from './ContactDetails';
+import ProfileMenu from './ProfileMenu';
+import CemeterySelector from './CemeterySelector';
 import Nav from './Nav';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
-import './index.css';
 import signUpConfig from '../../config/signUpConfig.json';
 import { withAuthenticator } from 'aws-amplify-react';
 import { withStyles } from '@material-ui/core/styles';
@@ -87,10 +88,6 @@ class App extends Component {
       this.setState({ open: false });
   }
 
-  state ={
-    title: "Dashboard"
-  }
-
   render(){
     const {classes } = this.props;
   return (
@@ -110,9 +107,11 @@ class App extends Component {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.title}>
             OSCMS
           </Typography>
+          <CemeterySelector />
+          <ProfileMenu />
         </Toolbar>
       </AppBar>
       <Nav open={this.state.open} handleDrawerClose={this.handleDrawerClose}/>
@@ -134,6 +133,7 @@ class App extends Component {
       }
 }
 
-// export default withAuthenticator(
-export default withStyles(styles)(App)
-//, { signUpConfig });
+export default withStyles(styles)(withAuthenticator(
+  App
+// export default withStyles(styles)(App); // Remove authentication to work offline
+, { signUpConfig }));

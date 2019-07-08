@@ -5,6 +5,7 @@ import Loader from "../../UI/Loader";
 import withSearch from "../../HOC/WithSearch";
 import { getContacts } from '../../../actions/index';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 class Contacts extends Component {
     constructor(props){
@@ -42,7 +43,6 @@ class Contacts extends Component {
 
 
         return(
-          <div>
             <MUIDataTable
                 title={"Contacts"}
                 data={this.props.contacts}
@@ -58,9 +58,9 @@ class Contacts extends Component {
                               'Sorry, there is no matching data to display',
                       },
                     },
+                    print: false,
                 }}
             />
-          </div>
         );
     }
 }
@@ -71,4 +71,7 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {getContacts})(withSearch(Contacts));
+export default compose(
+  connect(mapStateToProps, {getContacts}),
+  // withSearch
+)(Contacts);
