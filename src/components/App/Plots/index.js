@@ -24,6 +24,15 @@ class Plots extends Component {
         if(this.props.plots){
           columns = [
             {
+              name: "plot",
+              label: "Plot",
+              options: {
+                customBodyRender: function(plot, tableMeta){
+                  return `${plot.section}-${plot.lot}-${plot.grave}`
+                },
+              }
+            },
+            {
               name: "owners",
               label: "Owners",
               options: {
@@ -46,8 +55,16 @@ class Plots extends Component {
               label: "Status",
             },
             {
-              name: "plot",
-              label: "Plot",
+              name: "plot.section",
+              label: "Section",
+            },
+            {
+              name: "plot.lot",
+              label: "Lot",
+            },
+            {
+              name: "plot.grave",
+              label: "Grave",
             },
           ];
         }
