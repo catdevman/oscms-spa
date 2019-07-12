@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import MUIDataTable from "mui-datatables";
 import Moment from 'react-moment';
 import Loader from "../../UI/Loader";
-import withSearch from "../../HOC/WithSearch";
 import { getContacts } from '../../../actions/index';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -34,7 +33,7 @@ class Contacts extends Component {
             label: "DOB",
             options: {
               customBodyRender: function(date){
-                return <Moment format="MM-DD-YYYY">{date}</Moment>
+                return <Moment format="YYYYMMDD">{date}</Moment>
               },
               filterType: 'textField',
             }

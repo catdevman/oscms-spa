@@ -57,14 +57,23 @@ class Plots extends Component {
             {
               name: "plot.section",
               label: "Section",
+              options: {
+                display: false
+              },
             },
             {
               name: "plot.lot",
               label: "Lot",
+              options: {
+                display: false
+              },
             },
             {
               name: "plot.grave",
               label: "Grave",
+              options: {
+                display: false
+              },
             },
           ];
         }

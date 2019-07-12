@@ -34,7 +34,6 @@ class ProfileMenu extends Component {
     this.props.getCurrentUser();
   }
   render(){
-    const { open, anchorEl } = this.state;
     const { classes } = this.props;
     const { attributes } = this.props.user;
     return (

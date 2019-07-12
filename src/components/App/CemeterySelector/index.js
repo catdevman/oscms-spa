@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { getCemeteries } from '../../../actions';
+import { getCemeteries, setCurrentCemetery } from '../../../actions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Select from 'react-select';
+import Loader from '../../UI/Loader';
 
 
 
@@ -10,14 +11,17 @@ class CemeterySelector extends Component {
   constructor(props){
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {cemetery: null  }
+    this.state = {isLoading: true};
   }
   componentWillMount(){
-    this.props.getCemeteries();
+    this.props.setCurrentCemetery().then(()=>{
+      this.props.getCemeteries().then(() => {
+        this.setState({isLoading: false});
+      });
+    });
   }
   handleChange(event) {
-    console.log(event);
-    this.setState({cemetery: event});
+    this.props.setCurrentCemetery(event.value);
   }
   render(){
     const { classes } = this.props;
@@ -34,7 +38,15 @@ class CemeterySelector extends Component {
         width: 100,
       })
     }
+
+    const cemetery = cemeteries.find(
+      (c) => {
+        return c.value === parseInt(this.props.cemetery, 10);
+      }
+    );
+
     return (
+      this.state.isLoading ? <Loader /> :
       <Select
         isSearchable="true"
         label="Select Cemetery"
@@ -42,7 +54,7 @@ class CemeterySelector extends Component {
         classes={classes}
         styles={customStyles}
         options={cemeteries}
-        value={this.state.cemetery}
+        value={cemetery}
         onChange={this.handleChange}
        />
     );
@@ -50,10 +62,11 @@ class CemeterySelector extends Component {
 }
 function mapStateToProps(state){
   return {
-    cemeteries: state.cemeteries.all
+    cemeteries: state.cemeteries.all,
+    cemetery: state.cemeteries.cemetery
   };
 }
 
 export default compose(
-  connect(mapStateToProps,{getCemeteries})
+  connect(mapStateToProps,{getCemeteries, setCurrentCemetery})
 )(CemeterySelector);

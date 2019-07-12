@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import Dashboard from './Dashboard';
 import Plots from './Plots';
 import PlotDetails from './PlotDetails';
+import Profile from './Profile';
 import Contacts from './Contacts';
 import ContactDetails from './ContactDetails';
 import ProfileMenu from './ProfileMenu';
@@ -124,6 +125,7 @@ class App extends Component {
 
         <Route path="/" exact component={Dashboard} />
         <Route path="/plots" exact component={Plots} />
+        <Route path="/profile" exact component={Profile} />
         <Route path="/contacts" exact component={Contacts} />
         <Route path="/plots/:id" component={PlotDetails} />
         <Route path="/contacts/:id" component={ContactDetails} />

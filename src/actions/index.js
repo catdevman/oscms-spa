@@ -6,6 +6,7 @@ export const GET_CONTACTS = 'GET_CONTACTS';
 export const GET_CONTACT = 'GET_CONTACT';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const GET_CEMETERIES = 'GET_CEMETERIES';
+export const SET_CURRENT_CEMETERY = 'SET_CURRENT_CEMETERY';
 
 export function getPlots() {
   const res = API.getPlots();
@@ -38,8 +39,31 @@ export function getContact(id){
   };
 }
 
+export function setCurrentCemetery(id){
+  if(id === undefined){
+    return Auth.currentAuthenticatedUser({
+      bypassCache: true  
+    }).then((user) => {
+      console.log("Loaded from currentAuthenticatedUser");
+      return {
+          type: SET_CURRENT_CEMETERY,
+          payload: user.attributes['custom:cemetery_id'],
+      };
+    });
+  }
+
+  return {
+    type: SET_CURRENT_CEMETERY,
+    payload: id
+  };
+}
+
 export function getCurrentUser(){
-  const user = Auth.currentAuthenticatedUser();
+  const user = Auth.currentAuthenticatedUser({
+    bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+  }).then((user) => {
+    return user;
+  });
   return {
     type: GET_CURRENT_USER,
     payload: user
@@ -54,4 +78,4 @@ export function getCemeteries(){
   };
 }
 
-export default { getPlots, getPlot, getContacts, getContact, getCurrentUser };
+export default { getPlots, getPlot, getContacts, getContact, getCurrentUser, setCurrentCemetery };

@@ -1,6 +1,6 @@
-import { GET_CEMETERIES } from "../actions";
+import { GET_CEMETERIES, SET_CURRENT_CEMETERY } from "../actions";
 
-const INITIAL_STATE = {all:[]};
+const INITIAL_STATE = {all:[], cemetery: null};
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
@@ -9,6 +9,11 @@ export default function(state = INITIAL_STATE, action){
                 ...state,
                 all: action.payload.data
             };
+        case SET_CURRENT_CEMETERY:
+          return {
+              ...state,
+              cemetery: action.payload
+          };
         default:
             return state
     }
