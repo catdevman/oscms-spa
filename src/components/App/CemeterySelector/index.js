@@ -35,7 +35,8 @@ class CemeterySelector extends Component {
       }),
       control: () => ({
         // none of react-select's styles are passed to <Control />
-        width: 100,
+        minWidth: 100,
+        width: 250,
       })
     }
 
