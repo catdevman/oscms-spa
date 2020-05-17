@@ -44,7 +44,6 @@ export function setCurrentCemetery(id){
     return Auth.currentAuthenticatedUser({
       bypassCache: true  
     }).then((user) => {
-      console.log("Loaded from currentAuthenticatedUser");
       return {
           type: SET_CURRENT_CEMETERY,
           payload: user.attributes['custom:cemetery_id'],

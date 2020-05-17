@@ -1,28 +1,23 @@
-import config from '../config/api.json';
-import axios from 'axios';
+import { API, graphqlOperation } from 'aws-amplify';
+import * as queries from '../graphql/queries';
 
 export function getPlots(){
-    const res = axios.get(`${config.url}/plots`);
-    return res;
+    return API.graphql(graphqlOperation(queries.listLocations));
 }
 export function getPlot(id){
-    const res = axios.get(`${config.url}/plots/${id}`);
-    return res;
+    return API.graphql(graphqlOperation(queries.getLocation, {id}));
 }
 
 export function getContacts(){
-    const res = axios.get(`${config.url}/contacts`);
-    return res;
+    return API.graphql(graphqlOperation(queries.listContacts));
 }
 
 export function getContact(id){
-    const res = axios.get(`${config.url}/contacts/${id}`);
-    return res;
+    return API.graphql(graphqlOperation(queries.getContact, {id}));
 }
 
 export function getCemeteries(){
-    const res = axios.get(`${config.url}/cemeteries`);
-    return res;
+    return API.graphql(graphqlOperation(queries.listCemeterys));
 }
 
 export default { getPlots, getPlot, getContacts, getContact, getCemeteries };

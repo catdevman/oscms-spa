@@ -35,20 +35,8 @@ class ContactDetails extends Component {
             <Grid item xs={12} lg={6}>
               <TextField 
                   fullWidth
-                  label="First Name"
-                  defaultValue={this.props.contact.firstName}
-                  margin="normal"
-                  variant="outlined"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <TextField
-                  fullWidth
-                  label="Last Name"
-                  defaultValue={this.props.contact.lastName}
+                  label="Name"
+                  defaultValue={this.props.contact.name}
                   margin="normal"
                   variant="outlined"
                   InputProps={{

@@ -19,26 +19,36 @@ class Contacts extends Component {
       window.location = '/contacts/' + this.props.contacts[rowMeta.dataIndex].id;
     }
     render(){
-        const columns = [
+      let columns = [];
+      console.log(this.props.contacts);
+      if(this.props.contacts.length > 0){
+        columns = [
           {
-            name: "firstName",
-            label: "First",
-          },
-          {
-            name: "lastName",
-            label: "Last",
+            name: "name",
+            label: "Name",
           },
           {
             name: "dob",
             label: "DOB",
             options: {
               customBodyRender: function(date){
-                return <Moment format="YYYYMMDD">{date}</Moment>
+                if(date){
+                  return <Moment format="YYYY/MM/DD">{date}</Moment>
+                }
+                return <div>N/A</div>
               },
               filterType: 'textField',
             }
           },
+          {
+            name: "phoneNumber",
+            label: "Phone #",
+            options: {
+              filterType: 'textField',
+            }
+          }
         ];
+      }
 
 
         return(

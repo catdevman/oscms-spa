@@ -36,7 +36,7 @@ class PlotDetails extends Component {
                     multiline
                     fullWidth
                     label="Owners"
-                    defaultValue={this.props.plot.owners.map((owner) => owner.name).join('\n')}
+                    defaultValue={this.props.plot.owners.items.map((data) => data.owner.name).join('\n')}
                     margin="normal"
                     variant="outlined"
                     InputProps={{

@@ -7,12 +7,12 @@ export default function(state = INITIAL_STATE, action){
         case GET_CONTACTS:
             return {
                 ...state,
-                all: action.payload.data
+                all: action.payload.data ? action.payload.data.listContacts.items : []
             };
         case GET_CONTACT:
                 return {
                     ...state,
-                    contact: action.payload.data
+                    contact: action.payload.data ? action.payload.data.getContact : {}
                 };
         default:
             return state

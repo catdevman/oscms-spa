@@ -20,32 +20,50 @@ class Plots extends Component {
       window.location = '/plots/' + this.props.plots[rowMeta.dataIndex].id;
     }
     render(){
-        let columns = [];
-        if(this.props.plots){
+        let columns = []; 
+        if(this.props.plots.length > 0){
+          this.props.plots.map(data => {
+            data.location = `${data.section}-${data.plot}-${data.marker}`
+            return data
+          });
           columns = [
             {
-              name: "plot",
-              label: "Plot",
+              name: "location",
+              label: "Location",
               options: {
-                customBodyRender: function(plot, tableMeta){
-                  return `${plot.section}-${plot.lot}-${plot.grave}`
+                filter: false
+              }
+            },
+            {
+              name: "owners.items",
+              label: "Owners",
+              options: {
+                filterOptions: {
+                  names: _.uniq(_.flatten(this.props.plots.map(data => data.owners.items.map(d => d.owner.name)))),
+                  logic(owners, filters) {
+                    return owners.filter(data => filters.indexOf(data.owner.name)>=0).length === 0;
+                  },
+                },
+                customBodyRender: function(owners, tableMeta){
+                  owners = owners ? owners.map(data => data.owner.name) : [];
+                  const fullText = owners.join(", ");
+                  return <div title={fullText}>{ fullText.length > 25 ? fullText.substring(0,25) + "...": fullText}</div>
                 },
               }
             },
             {
-              name: "owners",
-              label: "Owners",
+              name: "occupants.items",
+              label: "Occupants",
               options: {
                 filterOptions: {
-                  names: _.uniq(_.flatten(this.props.plots.map(data => data.owners.map(owner => owner.name)))),
-                  logic(owners, filters) {
-                    const values = owners.filter(owner => filters.indexOf(owner.name)>=0);
-                    return values.length === 0;
-                  }
+                  names: _.uniq(_.flatten(this.props.plots.map(data => data.occupants.items.map(d => d.name)))),
+                  logic(occupants, filters) {
+                    return occupants.filter(data => filters.indexOf(data.name)>=0).length === 0;
+                  },
                 },
-                customBodyRender: function(owners, tableMeta){
-                  owners = owners.map(owner => owner.name);
-                  const fullText = owners.join(", ");
+                customBodyRender: function(occupants, tableMeta){
+                  occupants = occupants ? occupants.map(data => data.name) : [];
+                  const fullText = occupants.join(", ");
                   return <div title={fullText}>{ fullText.length > 25 ? fullText.substring(0,25) + "...": fullText}</div>
                 },
               }
@@ -55,21 +73,21 @@ class Plots extends Component {
               label: "Status",
             },
             {
-              name: "plot.section",
+              name: "section",
               label: "Section",
               options: {
                 display: false
               },
             },
             {
-              name: "plot.lot",
-              label: "Lot",
+              name: "plot",
+              label: "Plot",
               options: {
                 display: false
               },
             },
             {
-              name: "plot.grave",
+              name: "marker",
               label: "Grave",
               options: {
                 display: false
@@ -105,7 +123,7 @@ class Plots extends Component {
 }
 
 function mapStateToProps(state){
-  return {plots: state.plots.all }
+  return {plots: state.plots.all}
 }
 
 export default connect(mapStateToProps, {getPlots})(withSearch(Plots));

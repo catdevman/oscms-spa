@@ -1,7 +1,7 @@
 {
     "signUpFields":[
         {
-           "label": "First Name",
+            "label": "First Name",
             "key": "given_name",
             "required": true,
             "displayOrder": 1,

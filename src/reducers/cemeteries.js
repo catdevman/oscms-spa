@@ -7,7 +7,7 @@ export default function(state = INITIAL_STATE, action){
         case GET_CEMETERIES:
             return {
                 ...state,
-                all: action.payload.data
+                all: action.payload.data.listCemeterys.items
             };
         case SET_CURRENT_CEMETERY:
           return {

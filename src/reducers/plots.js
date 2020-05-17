@@ -7,10 +7,10 @@ export default function(state = INITIAL_STATE, action){
         case GET_PLOTS:
             return {
                 ...state,
-                all: action.payload.data
+                all: action.payload.data ? action.payload.data.listLocations.items : []
             };
         case GET_PLOT:
-            return {...state, plot: action.payload.data}
+            return {...state, plot: action.payload.data ? action.payload.data.getLocation : {} }
         default:
             return state
     }

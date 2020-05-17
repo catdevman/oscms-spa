@@ -1,0 +1,49 @@
+type Cemetery @model {
+  id: ID!
+  name: String!
+  locations: [Location] @connection(name: "CemeteryLocations")
+}
+type Location @model {
+  id: ID!
+  status: LocationStatus!
+  section: String!
+  plot: String!
+  marker: String! # Usually grave position
+  level: String
+  cemetery: Cemetery @connection(name: "CemeteryLocations")
+  owners: [LocationOwners] @connection(name: "LocationOwners")
+  occupants: [Contact] @connection(name:"OccupantLocation")
+}
+type Contact @model {
+  id: ID!
+  name: String!
+  phoneNumber: String
+  dob: AWSDate
+  ownedLocations: [LocationOwners]  @connection(name: "OwnerLocations")
+  occupiedLocation: Location @connection(name:"OccupantLocation")
+}
+
+type LocationOwners @model {
+  id: ID!
+  owner: Contact @connection(name:"OwnerLocations")
+  location: Location @connection(name: "LocationOwners")
+}
+
+
+enum LocationStatus {
+  PURCHASED
+  AVAILABLE
+  OCCUPIED
+}
+
+#### Top Level
+# Cemeteries
+# Contacts
+# Locations (Section:Plot:Marker - Position could be a burial or something else)
+
+#### Relationships
+# Cemeteries 1-m Locations
+# Contacts (Types: Owners and Occupants)
+# Locations  m-m Owners
+# Locations m-m Occupants
+# Contact m-relationship-m Contact

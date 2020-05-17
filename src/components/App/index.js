@@ -76,7 +76,7 @@ const styles = theme => ({
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {open: false};
+    this.state = {open: false, cemetery: null};
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
   }
@@ -90,7 +90,7 @@ class App extends Component {
   }
 
   render(){
-    const {classes } = this.props;
+    const { classes } = this.props;
   return (
     <div className={classes.root}>
       <AppBar

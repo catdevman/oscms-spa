@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCemeteries, setCurrentCemetery } from '../../../actions';
+import { getCemeteries, setCurrentCemetery, getCurrentUser } from '../../../actions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Select from 'react-select';
@@ -25,11 +25,15 @@ class CemeterySelector extends Component {
   }
   render(){
     const { classes } = this.props;
-    const cemeteries = this.props.cemeteries.map(
-      cemetery => { return {value: cemetery.id, label: cemetery.name}}
-    );
+    let cemeteries = [];
+    if ( this.props.cemeteries !== [] ){
+      cemeteries = this.props.cemeteries.map(
+        cemetery => { return {value: cemetery.id, label: cemetery.name}}
+      );
+    }
+
     const customStyles = {
-      option: (provided, state) => ({
+      option: (provided) => ({
         ...provided,
         padding: 20,
       }),
@@ -41,7 +45,7 @@ class CemeterySelector extends Component {
 
     const cemetery = cemeteries.find(
       (c) => {
-        return c.value === parseInt(this.props.cemetery, 10);
+        return c.value === this.props.selectedCemetery || this.props.cemetery;
       }
     );
 
@@ -63,10 +67,11 @@ class CemeterySelector extends Component {
 function mapStateToProps(state){
   return {
     cemeteries: state.cemeteries.all,
-    cemetery: state.cemeteries.cemetery
+    cemetery: state.cemeteries.cemetery,
+    selectedCemetery: state.user.attributes ? state.user.attributes['custom:cemetery_id'] : null
   };
 }
 
 export default compose(
-  connect(mapStateToProps,{getCemeteries, setCurrentCemetery})
+  connect(mapStateToProps,{getCemeteries, setCurrentCemetery, getCurrentUser})
 )(CemeterySelector);
