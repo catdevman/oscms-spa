@@ -13,7 +13,7 @@ class ContactDetails extends Component {
       super(props);
       this.state = { isLoading: true };
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
       this.props.getContact(this.props.match.params.id).then(() => this.setState({isLoading: false}));
     }
     render(){

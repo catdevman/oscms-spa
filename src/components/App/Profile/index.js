@@ -11,7 +11,7 @@ class Profile extends Component{
       this.state = { isLoading: true };
   }
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     this.props.getCurrentUser().then(() => {
       this.setState({isLoading: false})
     });

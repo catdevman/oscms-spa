@@ -12,7 +12,7 @@ class Contacts extends Component {
         this.onRowClick = this.onRowClick.bind(this);
         this.state = { isLoading: true, search: props.search };
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
       this.props.getContacts().then(() => this.setState({isLoading: false}));
     }
     onRowClick(rowData, rowMeta){

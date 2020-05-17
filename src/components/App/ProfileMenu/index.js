@@ -30,7 +30,7 @@ class ProfileMenu extends Component {
     this.setState({anchorEl: null, open: false});
   }
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     this.props.getCurrentUser();
   }
   render(){

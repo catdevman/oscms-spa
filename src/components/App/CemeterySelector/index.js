@@ -13,7 +13,7 @@ class CemeterySelector extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {isLoading: true};
   }
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     this.props.setCurrentCemetery().then(()=>{
       this.props.getCemeteries().then(() => {
         this.setState({isLoading: false});

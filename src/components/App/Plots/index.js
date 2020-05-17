@@ -12,7 +12,7 @@ class Plots extends Component {
         this.onRowClick = this.onRowClick.bind(this);
         this.state = { isLoading: true, search: props.search };
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
       this.props.getPlots()
         .then(() => this.setState({isLoading: false}));
     }
