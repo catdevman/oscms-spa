@@ -19,7 +19,7 @@
     "highcharts-react-official": "^2.2.2",
     "import": "^0.0.6",
     "material-ui-filter": "^2.1.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mui-datatables": "^2.3.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
